@@ -19,26 +19,23 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.10'
 
-      - name: Prepare Android project
+      - name: Prepare project
         run: |
           mkdir -p app/src/main/java/com/example/s26basilitut
           mkdir -p app/src/main/res/xml
           mkdir -p app/src/main/res/values
 
-          mv AndroidManifest.xml app/src/main/ 2>/dev/null || true
-          mv HoldAccessibilityService.java app/src/main/java/com/example/s26basilitut/ 2>/dev/null || true
-          mv MainActivity.java app/src/main/java/com/example/s26basilitut/ 2>/dev/null || true
-          mv accessibility_service_config.xml app/src/main/res/xml/ 2>/dev/null || true
-          mv strings.xml app/src/main/res/values/ 2>/dev/null || true
-          mv styles.xml app/src/main/res/values/ 2>/dev/null || true
+          mv AndroidManifest.xml app/src/main/
+          mv HoldAccessibilityService.java app/src/main/java/com/example/s26basilitut/
+          mv MainActivity.java app/src/main/java/com/example/s26basilitut/
+          mv accessibility_service_config.xml app/src/main/res/xml/
+          mv strings.xml app/src/main/res/values/
+          mv styles.xml app/src/main/res/values/
 
       - name: Build APK
         run: gradle assembleDebug

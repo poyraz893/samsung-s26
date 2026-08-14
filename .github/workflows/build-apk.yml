@@ -10,29 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.10'
 
-      - name: Prepare project
+      - name: Prepare files
         run: |
           mkdir -p app/src/main/java/com/example/s26basilitut
           mkdir -p app/src/main/res/xml
           mkdir -p app/src/main/res/values
 
           mv AndroidManifest.xml app/src/main/
-          mv HoldAccessibilityService.java app/src/main/java/com/example/s26basilitut/
           mv MainActivity.java app/src/main/java/com/example/s26basilitut/
+          mv HoldAccessibilityService.java app/src/main/java/com/example/s26basilitut/
           mv accessibility_service_config.xml app/src/main/res/xml/
           mv strings.xml app/src/main/res/values/
           mv styles.xml app/src/main/res/values/

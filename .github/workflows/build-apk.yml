@@ -1,0 +1,39 @@
+name: Build APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare Android project
+        run: |
+          mkdir -p app/src/main/java/com/example/s26basilitut
+          mkdir -p app/src/main/res/xml
+          mkdir -p app/src/main/res/values
+
+          mv AndroidManifest.xml app/src/main/ 2>/dev/null || true
+          mv HoldAccessibilityService.java app/src/main/java/com/example/s26basilitut/ 2>/dev/null || true
+          mv MainActivity.java app/src/main/java/com/example/s26basilitut/ 2>/dev/null || true
+          mv accessibility_service_config.xml app/src/main/res/xml/ 2>/dev/null || true
+          mv strings.xml app/src/main/res/values/ 2>/dev/null || true
+          mv styles.xml app/src/main/res/values/ 2>/dev/null || true
+
+      - name: Build APK
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Assemble Debug APK
+        run: gradle assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: S26-Basili-Tut
+          path: app/build/outputs/apk/debug/app-debug.apk
